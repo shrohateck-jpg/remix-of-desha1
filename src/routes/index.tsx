@@ -6,6 +6,8 @@ import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
 import { Desha } from "@/components/game/Desha";
 import { MagicBackground } from "@/components/game/MagicBackground";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   ssr: false,
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/")({
 
 function LandingPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const authRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +45,7 @@ function LandingPage() {
       redirect_uri: window.location.origin,
     });
     if (result.error) {
-      setError("حصلت مشكلة في تسجيل الدخول... جرب تاني.");
+      setError(t("signInError"));
       setLoading(false);
       return;
     }
@@ -59,25 +62,28 @@ function LandingPage() {
   };
 
   return (
-    <main className="relative min-h-dvh overflow-hidden px-5 pb-10 pt-5 sm:px-8 lg:px-12" dir="rtl">
+    <main className="relative min-h-dvh overflow-hidden px-5 pb-10 pt-5 sm:px-8 lg:px-12">
       <MagicBackground />
       <header className="mx-auto flex max-w-7xl items-center justify-between">
         <a
           href="#hero"
           className="flex items-center gap-3 rounded-full"
-          aria-label="ديشا، الرئيسية"
+          aria-label={t("homeLabel")}
         >
           <span className="gradient-magic flex size-10 items-center justify-center rounded-2xl font-display text-xl font-black text-primary-foreground shadow-lg">
             د
           </span>
           <span className="font-display text-xl font-bold">ديشا</span>
         </a>
-        <button
-          onClick={revealAuth}
-          className="glass rounded-full px-5 py-2.5 text-sm font-bold transition-colors hover:text-primary-glow"
-        >
-          تسجيل الدخول
-        </button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher compact />
+          <button
+            onClick={revealAuth}
+            className="glass rounded-full px-5 py-2.5 text-sm font-bold transition-colors hover:text-primary-glow"
+          >
+            {t("login")}
+          </button>
+        </div>
       </header>
 
       <section
@@ -91,36 +97,36 @@ function LandingPage() {
           className="flex flex-col items-start"
         >
           <div className="glass mb-7 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold text-primary-glow">
-            <Sparkles size={16} /> تجربة تحدي مختلفة تماماً
+            <Sparkles size={16} /> {t("heroBadge")}
           </div>
           <h1 className="text-balance font-display text-5xl font-black leading-[1.16] tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl">
-            🔥 اتحدى نفسك 🔥
+            {t("heroTitle")}
           </h1>
           <p className="mt-6 max-w-2xl text-pretty text-lg font-semibold leading-relaxed text-muted-foreground sm:text-xl">
-            اختبر معلوماتك واستمتع بأقوى تجربة تحدي.
+            {t("heroSubtitle")}
           </p>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
-            حوّل أهدافك اليومية لمهمات حقيقية، اثبت إنجازك، واجمع نقاطك بينما ديشا بيراقب كل خطوة.
+            {t("heroBody")}
           </p>
           <div className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <button
               onClick={revealAuth}
               className="premium-button gradient-magic glow-strong flex min-h-14 items-center justify-center gap-3 rounded-2xl px-8 text-lg font-black text-primary-foreground"
             >
-              ابدأ دلوقتي <ArrowLeft size={20} />
+              {t("start")} <ArrowLeft className="rtl:rotate-0 ltr:rotate-180" size={20} />
             </button>
             <a
               href="#features"
               className="glass flex min-h-14 items-center justify-center rounded-2xl px-7 text-base font-bold"
             >
-              اكتشف التجربة
+              {t("discover")}
             </a>
           </div>
           <div id="features" className="mt-10 grid w-full max-w-2xl grid-cols-3 gap-3">
             {[
-              { icon: Swords, value: "+100", label: "تحدي" },
-              { icon: Camera, value: "ذكي", label: "إثبات بالصور" },
-              { icon: Flame, value: "يومي", label: "ستريك و XP" },
+              { icon: Swords, value: "+100", label: t("challenges") },
+              { icon: Camera, value: t("smart"), label: t("photoProof") },
+              { icon: Flame, value: t("daily"), label: t("streakXp") },
             ].map(({ icon: Icon, value, label }) => (
               <div key={label} className="premium-card rounded-2xl p-4">
                 <Icon className="mb-3 text-primary-glow" size={20} />
@@ -144,9 +150,9 @@ function LandingPage() {
           </div>
           <div className="glass absolute bottom-5 right-0 max-w-56 rounded-2xl p-4 sm:right-4">
             <div className="flex items-center gap-2 text-sm font-bold">
-              <ShieldCheck size={18} className="text-success" /> الحكم صعب... بس عادل
+              <ShieldCheck size={18} className="text-success" /> {t("fairJudge")}
             </div>
-            <p className="mt-1 text-xs text-muted-foreground">مش هنحسب الإنجاز من غير دليل.</p>
+            <p className="mt-1 text-xs text-muted-foreground">{t("proofRequired")}</p>
           </div>
         </motion.div>
       </section>
@@ -166,15 +172,15 @@ function LandingPage() {
           <span className="gradient-magic mx-auto flex size-12 items-center justify-center rounded-2xl font-display text-2xl font-black">
             د
           </span>
-          <h2 className="mt-5 font-display text-2xl font-bold">جاهز تبدأ التحدي؟</h2>
-          <p className="mt-2 text-sm text-muted-foreground">ادخل بحساب جوجل وابدأ أول مهمة ليك.</p>
+          <h2 className="mt-5 font-display text-2xl font-bold">{t("ready")}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">{t("googleHint")}</p>
           <button
             onClick={signIn}
             disabled={loading}
             className="premium-button mt-6 flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-foreground px-6 text-base font-bold text-background disabled:cursor-wait disabled:opacity-60"
           >
             <GoogleIcon />
-            {loading ? "ثانية واحدة..." : "ادخل بحساب جوجل"}
+            {loading ? t("loading") : t("google")}
           </button>
           {error && (
             <p role="alert" className="mt-3 text-sm font-semibold text-destructive">

@@ -11,22 +11,22 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { LanguageProvider, useI18n } from "../lib/i18n";
 
 function NotFoundComponent() {
+  const { t } = useI18n();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4" dir="rtl">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-display text-7xl font-bold text-glow">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">الصفحة دي مش موجودة 😅</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          يمكن اتمسحت أو إنت كتبت اللينك غلط... بيحصل.
-        </p>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">{t("notFound")}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{t("notFoundBody")}</p>
         <div className="mt-6">
           <Link
             to="/"
             className="gradient-magic glow inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold text-primary-foreground"
           >
-            ارجع للرئيسية
+            {t("backHome")}
           </Link>
         </div>
       </div>
@@ -37,19 +37,16 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useI18n();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4" dir="rtl">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          الصفحة معملتش تحميل
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          حصلت مشكلة عندنا. جرب تعمل تحديث أو ارجع للرئيسية.
-        </p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">{t("loadFailed")}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t("loadFailedBody")}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -58,13 +55,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             }}
             className="gradient-magic inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold text-primary-foreground"
           >
-            جرب تاني
+            {t("retry")}
           </button>
           <a
             href="/"
             className="glass inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold text-foreground"
           >
-            الرئيسية
+            {t("home")}
           </a>
         </div>
       </div>
@@ -148,9 +145,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-    </QueryClientProvider>
+    <LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </QueryClientProvider>
+    </LanguageProvider>
   );
 }
