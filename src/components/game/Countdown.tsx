@@ -19,7 +19,7 @@ export function Countdown({ endsAt }: { endsAt: string }) {
   return (
     <div className="text-center" dir="rtl">
       <div
-        className={`font-display text-6xl font-bold tabular-nums tracking-wider md:text-7xl ${
+        className={`font-display text-6xl font-black tabular-nums tracking-wider md:text-8xl ${
           overtime ? "text-destructive" : "text-glow"
         }`}
       >

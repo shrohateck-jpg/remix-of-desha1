@@ -13,7 +13,7 @@ export function XPBar({ xp }: { xp: number }) {
           {current} / {needed} XP
         </span>
       </div>
-      <div className="h-3 overflow-hidden rounded-full border border-border bg-muted/60">
+      <div className="h-2.5 overflow-hidden rounded-full border border-border bg-muted/60 shadow-inner">
         <motion.div
           className="h-full rounded-full gradient-magic glow"
           initial={{ width: 0 }}

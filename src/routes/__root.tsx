@@ -18,7 +18,9 @@ function NotFoundComponent() {
       <div className="max-w-md text-center">
         <h1 className="font-display text-7xl font-bold text-glow">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">الصفحة دي مش موجودة 😅</h2>
-        <p className="mt-2 text-sm text-muted-foreground">يمكن اتمسحت أو إنت كتبت اللينك غلط... بيحصل.</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          يمكن اتمسحت أو إنت كتبت اللينك غلط... بيحصل.
+        </p>
         <div className="mt-6">
           <Link
             to="/"
@@ -42,8 +44,12 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4" dir="rtl">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">الصفحة معملتش تحميل</h1>
-        <p className="mt-2 text-sm text-muted-foreground">حصلت مشكلة عندنا. جرب تعمل تحديث أو ارجع للرئيسية.</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          الصفحة معملتش تحميل
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          حصلت مشكلة عندنا. جرب تعمل تحديث أو ارجع للرئيسية.
+        </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -72,17 +78,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { name: "description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
+      {
+        name: "description",
+        content:
+          "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه.",
+      },
       { name: "author", content: "DESHA" },
       { property: "og:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { property: "og:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
+      {
+        property: "og:description",
+        content:
+          "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#17111f" },
+      { name: "theme-color", content: "#0c0d13" },
       { name: "twitter:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { name: "twitter:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp" },
+      {
+        name: "twitter:description",
+        content:
+          "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp",
+      },
     ],
     links: [
       {
@@ -106,7 +132,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className="bg-background">
       <head>
         <HeadContent />
       </head>
